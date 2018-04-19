@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "node-fetch": "^2.1.2"
+  },
+  "name": "human-connection-glue-code",
+  "version": "1.0.0",
+  "description": "Glue code between social network Human Connection and digital democracy app Democracy",
+  "main": "index.mjs",
+  "repository": "https://github.com/roschaefer/human-connection-glue-code",
+  "author": "Robert Schaefer <git@roschaefer.de>",
+  "license": "MIT"
+}
