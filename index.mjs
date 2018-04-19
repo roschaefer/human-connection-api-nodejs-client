@@ -53,7 +53,7 @@ async function main() {
   const user = new User();
   await user.login('test2@test2.de', '1234');
   let procedures = await bundestagProcedures();
-  procedures = procedures.filter((p) => { return ! _.isNil(p.abstract) });
+  procedures = procedures.filter(p => !_.isNil(p.abstract));
 
 
   if (_.isEmpty(procedures)) {
