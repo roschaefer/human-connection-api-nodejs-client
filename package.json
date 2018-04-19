@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "lodash": "^4.17.5",
     "node-fetch": "^2.1.2"
   },
   "name": "human-connection-api-nodejs-client",
@@ -10,6 +11,12 @@
   "author": "Robert Schaefer <git@roschaefer.de>",
   "license": "MIT",
   "scripts": {
-    "start" : "node --experimental-modules index.mjs"
+    "lint": "eslint --ext mjs .",
+    "start": "node --experimental-modules index.mjs"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.11.0"
   }
 }
