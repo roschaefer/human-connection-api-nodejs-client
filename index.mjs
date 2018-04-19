@@ -59,6 +59,7 @@ async function main() {
   const contribution = {
     title: procedures[0].title,
     content: procedures[0].abstract,
+    contentExcerpt: procedures[0].abstract,
     type: "post",
     language: "de",
     categoryIds: ["5ac7768f8d655d2ee6d48fe4"] // democracy-politics
