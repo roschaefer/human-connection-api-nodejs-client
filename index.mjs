@@ -1,7 +1,8 @@
 import fetch from 'node-fetch';
 
 const hcBackendUrl = 'http://localhost:3030'
-const bundestagGraphqlUrl = 'https://democracy.bundestag.io/graphql' 
+const bundestagGraphqlUrl = 'http://localhost:3000/graphql'
+const query = '{"query": "{procedures(type: PREPARATION) { title abstract }}"}';
 
 class User {
   login(email, password) {
@@ -37,7 +38,6 @@ class User {
 }
 
 async function bundestagProcedures(){
-  const query = '{"query": "{procedures(type: PREPARATION, pageSize: 1) { title abstract }}"}';
   return await fetch(bundestagGraphqlUrl, {
   method: 'post',
     body: query,
@@ -56,16 +56,20 @@ async function main() {
   let user = new User();
   await user.login('test2@test2.de', '1234');
   const procedures = await bundestagProcedures();
-  const contribution = {
-    title: procedures[0].title,
-    content: procedures[0].abstract,
-    contentExcerpt: procedures[0].abstract,
-    type: "post",
-    language: "de",
-    categoryIds: ["5ac7768f8d655d2ee6d48fe4"] // democracy-politics
-  } 
-  const response = await user.contribute(contribution);
-  console.log(response);
+  if (procedures.length > 0){
+    const contribution = {
+      title: procedures[0].title,
+      content: procedures[0].abstract,
+      contentExcerpt: procedures[0].abstract,
+      type: "post",
+      language: "de",
+      categoryIds: ["5ac7768f8d655d2ee6d48fe4"] // democracy-politics
+    }
+    const response = await user.contribute(contribution);
+    console.log(response);
+  } else {
+    console.log("No procedures found!");
+  }
 }
 
 main();
