@@ -14,7 +14,8 @@
   "license": "MIT",
   "scripts": {
     "lint": "eslint --ext mjs .",
-    "start": "node --experimental-modules index.mjs"
+    "start": "node --experimental-modules index.mjs",
+    "test": "cucumber-js"
   },
   "devDependencies": {
     "eslint": "^4.19.1",
