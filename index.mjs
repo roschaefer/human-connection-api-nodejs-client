@@ -69,7 +69,15 @@ async function main() {
     };
     const response = await user.contribute(contribution);
     console.log(response);
+    process.exit(0);
   }
+  process.exit(-1);
 }
 
-main();
+main().catch((err) => {
+  console.log(err);
+  if (err.code === 'ECONNREFUSED'){
+    console.log('\nProbably a service is not running?\n');
+  }
+  process.exit(-100);
+});
