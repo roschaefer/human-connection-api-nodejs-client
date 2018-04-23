@@ -1,0 +1,39 @@
+{
+  "host": "API_HOST",
+  "port": "API_PORT",
+  "baseURL": "API_BASE_URL",
+  "frontURL": "WEBAPP_BASE_URL",
+  "mongodb": "MONGO_DB",
+  "debug": true,
+  "smtpConfig": {
+    "host": "SMTP_HOST",
+    "port": 587,
+    "secure": false,
+    "auth": {
+      "user": "SMTP_USER",
+      "pass": "SMTP_PASS"
+    }
+  },
+  "thumbor": {
+    "url": "THUMBOR_URL",
+    "key": "THUMBOR_KEY"
+  },
+  "sentry": {
+    "dns": "SENTRY_DNS",
+    "options": {
+      "environment": "production"
+    }
+  },
+  "apiSecret": "API_SECRET",
+  "authentication": {
+    "secret": "AUTH_SECRET",
+    "jwt": {
+      "audience": "WEBAPP_BASE_URL"
+    }
+  },
+  "seeder": {
+    "runOnInit": false,
+    "dropDatabase": false
+  },
+  "defaultEmail": "EMAIL_ADDRESS"
+}
