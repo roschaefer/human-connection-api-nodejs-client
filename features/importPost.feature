@@ -5,7 +5,9 @@ Feature: Import a post from an organization and publish it in Human Connection
 
 
   Background:
-    Given there is an organization in Human Connection with these credentials:
+    Given the Human Connection API is up and running
+    And there is a 3rd party application running, e.g. 'Democracy'
+    And there is an organization in Human Connection with these credentials:
       | Email                    | Password |
       | organization@example.com |     1234 |
 

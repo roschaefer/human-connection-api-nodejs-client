@@ -76,7 +76,7 @@ async function main() {
 
 main().catch((err) => {
   console.log(err);
-  if (err.code === 'ECONNREFUSED'){
+  if (err.code === 'ECONNREFUSED') {
     console.log('\nProbably a service is not running?\n');
   }
   process.exit(-100);
