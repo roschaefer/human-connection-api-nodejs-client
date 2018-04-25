@@ -31,3 +31,10 @@ Or
 ```sh
 yarn start
 ```
+
+## Test
+
+Run:
+```
+yarn test
+```
