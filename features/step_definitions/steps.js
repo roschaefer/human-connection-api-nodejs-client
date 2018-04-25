@@ -1,19 +1,25 @@
 const { Given, When, Then } = require('cucumber');
+const userSchema = require('../../human-connection-api/server/models/users.model.js');
+const getModel = require('../env/getModel.js');
+const User = getModel(userSchema);
 
 Given('the Human Connection API is up and running', function () {
-  // Write code here that turns the phrase above into concrete actions
-  console.log('skipping over starting the Human Connection API');
+  // Just documentation
 });
 
 Given("there is a 3rd party application running, e.g. 'Democracy'", function () {
-  // Write code here that turns the phrase above into concrete actions
-  console.log('skipping over starting the 3rd party API');
-  // return 'pending';
+  // Just documentation
 });
 
 Given('there is an organization in Human Connection with these credentials:', function (dataTable) {
   // Write code here that turns the phrase above into concrete actions
-  return 'pending';
+  const table = dataTable.hashes()
+  dataTable.hashes().forEach((row) => {
+    const aUser = new User(row);
+    aUser.save(function (err, user) {
+      if(err) throw(err);
+    });
+  });
 });
 
 Given('I am authenticated', function () {
