@@ -7,12 +7,12 @@ let hcApi;
 
 // Asynchronous Callback
 BeforeAll({ timeout: 30 * 1000 }, (callback) => {
-  hcApi = spawn('node', ['server/'], {
+  hcApi = spawn((process.env.NODE_PATH || 'node'), ['server/'], {
     cwd: './human-connection-api/',
     env: {
       NODE_ENV: 'test',
     },
-  });
+  }).on('error', (err) => { throw err; });
 
   hcApi.stdout.on('data', (data) => {
     console.log(`stdout: ${data}`);

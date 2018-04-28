@@ -22,7 +22,11 @@ function authenticate(email, plainTextPassword) {
     method: 'post',
     body: JSON.stringify(formData),
     headers: { 'Content-Type': 'application/json' },
-  }).then(response => response.json()).then(json => json.accessToken);
+  }).then(response => response.json())
+    .catch((err) => {
+      throw (err);
+    })
+    .then(json => json.accessToken);
 }
 
 Given('the Human Connection API is up and running', () => {
@@ -63,10 +67,15 @@ When('I send a POST request to {string} with:', (route, body, callback) => {
   if (currentUserAccessToken) {
     params.headers.Authorization = `Bearer ${currentUserAccessToken}`;
   }
-  fetch(`${hcBackendUrl}${route}`, params).then(response => response.json()).then((json) => {
-    httpResponse = json;
-    callback();
-  });
+  fetch(`${hcBackendUrl}${route}`, params)
+    .then(response => response.json())
+    .catch((err) => {
+      throw (err);
+    })
+    .then((json) => {
+      httpResponse = json;
+      callback();
+    });
 });
 
 Then('there is an access token in the response:', (_docString) => {
