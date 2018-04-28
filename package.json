@@ -18,7 +18,7 @@
   "author": "Robert Schaefer <git@roschaefer.de>",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint --ext mjs .",
+    "lint": "eslint features/ index.mjs",
     "start": "node --experimental-modules index.mjs",
     "test": "cucumber-js"
   },

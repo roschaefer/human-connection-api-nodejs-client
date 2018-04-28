@@ -1,17 +1,20 @@
 const { Given, When, Then } = require('cucumber');
 const fetch = require('node-fetch');
 const mongoose = require('mongoose');
-const expect = require('chai').expect;
+const { expect } = require('chai');
 // Hack: Directly accessing the default password hashing function
 const encrypt = require('../../node_modules/feathers-authentication-local/lib/utils/hash');
 
-let currentUser, currentUserPassword, httpResponse, currentUserAccessToken;
+let currentUser;
+let currentUserPassword;
+let httpResponse;
+let currentUserAccessToken;
 const hcBackendUrl = 'http://localhost:3030';
 
 
-function authenticate(email, plainTextPassword){
+function authenticate(email, plainTextPassword) {
   const formData = {
-    email: email,
+    email,
     password: plainTextPassword,
     strategy: 'local',
   };
@@ -19,22 +22,20 @@ function authenticate(email, plainTextPassword){
     method: 'post',
     body: JSON.stringify(formData),
     headers: { 'Content-Type': 'application/json' },
-  }).then(response => response.json()).then((json) => {
-    return json.accessToken;
-  });
+  }).then(response => response.json()).then(json => json.accessToken);
 }
 
-Given('the Human Connection API is up and running', function () {
+Given('the Human Connection API is up and running', () => {
   // Just documentation
 });
 
-Given("there is a 3rd party application running, e.g. 'Democracy'", function () {
+Given("there is a 3rd party application running, e.g. 'Democracy'", () => {
   // Just documentation
 });
 
-Given('there is an organization in Human Connection with these credentials:', function (dataTable) {
+Given('there is an organization in Human Connection with these credentials:', (dataTable) => {
   const User = mongoose.model('users');
-  params = dataTable.hashes()[0];
+  const params = dataTable.hashes()[0];
   return encrypt(params.password).then((hashedPassword) => {
     currentUserPassword = params.password; // remember plain text password
     params.password = hashedPassword; // hashed password goes into db
@@ -43,22 +44,20 @@ Given('there is an organization in Human Connection with these credentials:', fu
   });
 });
 
-Given('I am authenticated', function () {
-  return authenticate(currentUser.email, currentUserPassword).then((accessToken) => {
-    currentUserAccessToken = accessToken;
-  });
-});
+Given('I am authenticated', () => authenticate(currentUser.email, currentUserPassword).then((accessToken) => {
+  currentUserAccessToken = accessToken;
+}));
 
-Given('my user account is verified', function () {
+Given('my user account is verified', () => {
   // Write code here that turns the phrase above into concrete actions
   currentUser.isVerified = true;
   return currentUser.save();
 });
 
-When('I send a POST request to {string} with:', function (route, body, callback) {
-  let params = {
+When('I send a POST request to {string} with:', (route, body, callback) => {
+  const params = {
     method: 'post',
-    body: body,
+    body,
     headers: { 'Content-Type': 'application/json' },
   };
   if (currentUserAccessToken) {
@@ -70,15 +69,15 @@ When('I send a POST request to {string} with:', function (route, body, callback)
   });
 });
 
-Then('there is an access token in the response:', function (docString) {
+Then('there is an access token in the response:', () => {
   expect(httpResponse.accessToken).to.be.a('string');
   expect(httpResponse.accessToken.length).to.eq(342);
 });
 
-Then('a new post should be created', function (callback) {
+Then('a new post should be created', (callback) => {
   const Contribution = mongoose.model('contributions');
-  Contribution.find({}, function(err, contributions){
-    if(err) throw(err);
+  Contribution.find({}, (err, contributions) => {
+    if (err) throw (err);
     expect(contributions).to.have.lengthOf(1);
     expect(contributions[0].type).to.eq('post');
     callback();

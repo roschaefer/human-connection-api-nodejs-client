@@ -1,16 +1,17 @@
-const {AfterAll, BeforeAll} = require('cucumber');
+/* eslint no-console: off */
+const { AfterAll, BeforeAll } = require('cucumber');
 const { spawn } = require('child_process');
 const waitOn = require('wait-on');
 
 let hcApi;
 
 // Asynchronous Callback
-BeforeAll({timeout: 30*1000}, function (callback) {
+BeforeAll({ timeout: 30 * 1000 }, (callback) => {
   hcApi = spawn('node', ['server/'], {
     cwd: './human-connection-api/',
     env: {
-      'NODE_ENV': 'test'
-    }
+      NODE_ENV: 'test',
+    },
   });
 
   hcApi.stdout.on('data', (data) => {
@@ -21,15 +22,15 @@ BeforeAll({timeout: 30*1000}, function (callback) {
     console.log(`stderr: ${data}`);
   });
 
-  waitOn({ resources: ['tcp:3030'], timeout: 30000 }, function (err) {
-    if (err) { return handleError(err); }
-    callback();
+  waitOn({ resources: ['tcp:3030'], timeout: 30000 }, (err) => {
+    if (err) throw (err);
+    return callback();
   });
 });
 
 // Asynchronous Promise
-AfterAll(function () {
+AfterAll(() => {
   // perform some shared teardown
   hcApi.kill();
-  return Promise.resolve()
+  return Promise.resolve();
 });
