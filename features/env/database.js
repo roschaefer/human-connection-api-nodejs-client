@@ -23,13 +23,8 @@ db.once('open', function() {
 
 // Asynchronous Promise
 Before(function(_, callback) {
-  let promises = [User].map((model) => {
-    return new Promise(function(resolve, reject) {
-      model.remove(function (err) {
-        if(err) reject(err);
-        resolve();
-      });
-    });
+  let promises = [User, Contribution].map((model) => {
+    return model.remove();
   });
   Promise.all(promises).then(() => {
     callback();

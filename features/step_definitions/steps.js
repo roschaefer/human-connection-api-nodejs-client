@@ -32,17 +32,14 @@ Given("there is a 3rd party application running, e.g. 'Democracy'", function () 
   // Just documentation
 });
 
-Given('there is an organization in Human Connection with these credentials:', function (dataTable, callback) {
+Given('there is an organization in Human Connection with these credentials:', function (dataTable) {
   const User = mongoose.model('users');
   params = dataTable.hashes()[0];
-  encrypt(params.password).then((hashedPassword) => {
+  return encrypt(params.password).then((hashedPassword) => {
     currentUserPassword = params.password; // remember plain text password
     params.password = hashedPassword; // hashed password goes into db
     currentUser = new User(params);
-    currentUser.save(function (err, user) {
-      if(err) callback(err);
-      callback();
-    });
+    return currentUser.save();
   });
 });
 
@@ -52,13 +49,10 @@ Given('I am authenticated', function () {
   });
 });
 
-Given('my user account is verified', function (callback) {
+Given('my user account is verified', function () {
   // Write code here that turns the phrase above into concrete actions
   currentUser.isVerified = true;
-  currentUser.save(function(err, user) {
-    if(err) throw(err);
-    callback();
-  });
+  return currentUser.save();
 });
 
 When('I send a POST request to {string} with:', function (route, body, callback) {
