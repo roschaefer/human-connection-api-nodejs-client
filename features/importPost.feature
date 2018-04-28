@@ -29,15 +29,16 @@ Feature: Import a post from an organization and publish it in Human Connection
 
   Scenario: Publish a post
     Given I am authenticated
+    And my user account is verified
     When I send a POST request to "/contributions" with:
     """
     {
       "title": "Cool title",
       "content": "<p>A nice content</p>",
       "contentExcerpt": "Nice",
-      "type": 'post',
-      "language": 'de',
-      "categoryIds: ['5ac7768f8d655d2ee6d48fe4']
+      "type": "post",
+      "language": "de",
+      "categoryIds": ["5ac7768f8d655d2ee6d48fe4"]
     }
     """
     Then a new post should be created
