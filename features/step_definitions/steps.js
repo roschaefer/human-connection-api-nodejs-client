@@ -69,7 +69,7 @@ When('I send a POST request to {string} with:', (route, body, callback) => {
   });
 });
 
-Then('there is an access token in the response:', () => {
+Then('there is an access token in the response:', (_docString) => {
   expect(httpResponse.accessToken).to.be.a('string');
   expect(httpResponse.accessToken.length).to.eq(342);
 });
