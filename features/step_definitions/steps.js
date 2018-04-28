@@ -1,7 +1,5 @@
 const { Given, When, Then } = require('cucumber');
-const userSchema = require('../../human-connection-api/server/models/users.model.js');
-const getModel = require('../env/getModel.js');
-const User = getModel(userSchema);
+const mongoose = require('mongoose');
 
 Given('the Human Connection API is up and running', function () {
   // Just documentation
@@ -12,9 +10,9 @@ Given("there is a 3rd party application running, e.g. 'Democracy'", function () 
 });
 
 Given('there is an organization in Human Connection with these credentials:', function (dataTable) {
-  // Write code here that turns the phrase above into concrete actions
   const table = dataTable.hashes()
   dataTable.hashes().forEach((row) => {
+    const User = mongoose.model('users');
     const aUser = new User(row);
     aUser.save(function (err, user) {
       if(err) throw(err);
