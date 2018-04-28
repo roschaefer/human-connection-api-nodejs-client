@@ -81,7 +81,12 @@ Then('there is an access token in the response:', function (docString) {
   expect(httpResponse.accessToken.length).to.eq(342);
 });
 
-Then('a new post should be created', function () {
-  // Write code here that turns the phrase above into concrete actions
-  return 'pending';
+Then('a new post should be created', function (callback) {
+  const Contribution = mongoose.model('contributions');
+  Contribution.find({}, function(err, contributions){
+    if(err) throw(err);
+    expect(contributions).to.have.lengthOf(1);
+    expect(contributions[0].type).to.eq('post');
+    callback();
+  });
 });

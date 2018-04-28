@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const sinon = require('sinon');
 
 const userSchema = require('../../human-connection-api/server/models/users.model.js');
+const contributionSchema = require('../../human-connection-api/server/models/contributions.model.js');
 
 mongoose.connect("mongodb://localhost/hc_api_test");
 const db = mongoose.connection;
@@ -12,16 +13,25 @@ sinon.stub(app, 'get').callsFake(function() {
   return mongoose;
 });
 
-let User;
+let User, Contribution;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
-  User = userSchema(app); // initialize User model
+  // initialize models needed in step definitions
+  User = userSchema(app);
+  Contribution = contributionSchema(app);
 });
 
 // Asynchronous Promise
 Before(function(_, callback) {
-  User.remove(function (err) {
-    if(err) throw(err);
+  let promises = [User].map((model) => {
+    return new Promise(function(resolve, reject) {
+      model.remove(function (err) {
+        if(err) reject(err);
+        resolve();
+      });
+    });
+  });
+  Promise.all(promises).then(() => {
     callback();
   });
 });
