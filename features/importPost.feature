@@ -23,7 +23,7 @@ Feature: Import a post from an organization and publish it in Human Connection
     Then there is an access token in the response:
     """
     {
-      accessToken: [...]
+      "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6ImFjY2VzcyIsInR5cGUiOiJhY2Nlc3MifQ..."
     }
     """
 

@@ -78,9 +78,12 @@ When('I send a POST request to {string} with:', (route, body, callback) => {
     });
 });
 
-Then('there is an access token in the response:', (_docString) => {
+Then('there is an access token in the response:', (jsonResponse) => {
   expect(httpResponse.accessToken).to.be.a('string');
   expect(httpResponse.accessToken.length).to.eq(342);
+  const expectedAccessToken = JSON.parse(jsonResponse).accessToken;
+  const expectedFirstPartOfJwt = expectedAccessToken.split('.')[0];
+  expect(httpResponse.accessToken.split('.')[0]).to.eq(expectedFirstPartOfJwt);
 });
 
 Then('a new post should be created', (callback) => {
