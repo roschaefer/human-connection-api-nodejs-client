@@ -1,5 +1,5 @@
 # human-connection-api-nodejs-client
-[![Build Status](https://travis-ci.org/roschaefer/human-connection-api-nodejs-client.svg?branch=master)](https://travis-ci.org/roschaefer/human-connection-api-nodejs-client)
+[![Build Status](https://travis-ci.org/demokratie-live/human-connection-api-nodejs-client.svg?branch=master)](https://travis-ci.org/demokratie-live/human-connection-api-nodejs-client)
 
 ## Prerequisites
 The development environment of this plugin uses the backend APIs of [Human Connection](https://human-connection.org/) and [Democracy](https://www.democracy-deutschland.de/#!start).
