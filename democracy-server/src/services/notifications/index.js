@@ -1,16 +1,21 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 
-import _ from 'lodash';
-import apn from 'apn';
-import gcm from 'node-gcm';
+// import _ from 'lodash';
+// import apn from 'apn';
+// import gcm from 'node-gcm';
+// import util from 'util';
 
-import apnProvider from './apn';
-import gcmProvider from './gcm';
+// import apnProvider from './apn';
+// import gcmProvider from './gcm';
 import UserModel from '../../models/User';
 import ProcedureModel from '../../models/Procedure';
+// import CONFIG from '../../config/constants';
 
-const sendNotifications = ({ tokenObjects, message }) => {
-  const androidNotificationTokens = [];
+// TODO: remove both eslint-disable-line
+const sendNotifications = ({ tokenObjects, message }) => { // eslint-disable-line
+  // Disable Push Notifications
+  return; // eslint-disable-line
+  /* const androidNotificationTokens = [];
   tokenObjects.forEach(({ token, os }) => {
     switch (os) {
       case 'ios':
@@ -19,7 +24,7 @@ const sendNotifications = ({ tokenObjects, message }) => {
 
           note.alert = message;
           // note.payload = { messageFrom: 'John Appleseed' };
-          note.topic = 'de.democracy-deutschland.clientapp';
+          note.topic = CONFIG.APN_TOPIC;
 
           apnProvider.send(note, token).then((result) => {
             console.log('apnProvider.send', result);
@@ -54,7 +59,7 @@ const sendNotifications = ({ tokenObjects, message }) => {
         else console.log('gcmProvider', response);
       },
     );
-  }
+  } */
 };
 
 const newVote = async ({ procedureId }) => {
@@ -104,8 +109,13 @@ const procedureUpdate = async ({ procedureId }) => {
 
 export { procedureUpdate, newVote, newPreperation };
 
-export default async ({ message, user }) => {
-  let userId;
+// TODO: remove both eslint-disable-line
+export default async ({ message, user }) => { // eslint-disable-line
+  // Disable Push Notifications
+  return; // eslint-disable-line
+  // This function seems to be (partly) a duplicate of the sendNotifications function
+  // refactor?
+  /* let userId;
   if (_.isObject(user)) {
     userId = user._id;
   }
@@ -120,10 +130,10 @@ export default async ({ message, user }) => {
 
             note.alert = message;
             // note.payload = { messageFrom: 'John Appleseed' };
-            note.topic = 'de.democracy-deutschland.clientapp';
+            note.topic = CONFIG.APN_TOPIC;
 
             apnProvider.send(note, token).then((result) => {
-              console.log('apnProvider.send', result);
+              console.log('apnProvider.send', util.inspect(result, false, null));
             });
           }
           break;
@@ -156,5 +166,5 @@ export default async ({ message, user }) => {
         },
       );
     }
-  }
+  } */
 };
